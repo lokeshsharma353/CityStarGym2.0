@@ -645,3 +645,196 @@ style.textContent = `
 
 `;
 document.head.appendChild(style);
+
+// Exercise Modal functionality
+function initExerciseModal() {
+    const exercisesBtn = document.getElementById('exercisesBtn');
+    const levelModal = document.getElementById('levelModal');
+    const bodyPartModal = document.getElementById('bodyPartModal');
+    const closeBtns = document.querySelectorAll('.close, .close-body');
+    const levelCards = document.querySelectorAll('.level-card');
+    const bodyPartCards = document.querySelectorAll('.body-part-card');
+    const exerciseSection = document.getElementById('exercises');
+    
+    let selectedLevel = '';
+    
+    if (!exercisesBtn || !levelModal) return;
+    
+    // Open level modal when exercises button is clicked
+    exercisesBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        levelModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    });
+    
+    // Close modals
+    closeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            levelModal.style.display = 'none';
+            bodyPartModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+    });
+    
+    // Handle level selection
+    levelCards.forEach(card => {
+        card.addEventListener('click', () => {
+            selectedLevel = card.getAttribute('data-level');
+            document.getElementById('selectedLevel').textContent = selectedLevel;
+            levelModal.style.display = 'none';
+            bodyPartModal.style.display = 'block';
+        });
+    });
+    
+    // Handle body part selection
+    bodyPartCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const bodyPart = card.getAttribute('data-part');
+            showExercises(selectedLevel, bodyPart);
+            bodyPartModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+    });
+    
+    // Navigation buttons
+    const backToLevelsFromBody = document.getElementById('backToLevelsFromBody');
+    const backToBodyParts = document.getElementById('backToBodyParts');
+    
+    if (backToLevelsFromBody) {
+        backToLevelsFromBody.addEventListener('click', () => {
+            bodyPartModal.style.display = 'none';
+            levelModal.style.display = 'block';
+        });
+    }
+    
+    if (backToBodyParts) {
+        backToBodyParts.addEventListener('click', () => {
+            exerciseSection.style.display = 'none';
+            bodyPartModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+    }
+}
+
+function showExercises(level, bodyPart) {
+    const exerciseSection = document.getElementById('exercises');
+    const exerciseTitle = document.getElementById('exerciseTitle');
+    const exerciseGrid = document.getElementById('exerciseGrid');
+    
+    // Update title
+    exerciseTitle.textContent = `${level.charAt(0).toUpperCase() + level.slice(1)} ${bodyPart.charAt(0).toUpperCase() + bodyPart.slice(1)} Exercises`;
+    
+    // Get exercises for the level and body part
+    const exercises = getExercisesForLevelAndBodyPart(level, bodyPart);
+    
+    // Clear and populate exercise grid
+    exerciseGrid.innerHTML = '';
+    exercises.forEach(exercise => {
+        const exerciseCard = createExerciseCard(exercise);
+        exerciseGrid.appendChild(exerciseCard);
+    });
+    
+    // Show exercise section
+    exerciseSection.style.display = 'block';
+    exerciseSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+function getExercisesForLevelAndBodyPart(level, bodyPart) {
+    const exercises = {
+        beginner: {
+            chest: [
+                { name: 'Wall Push-ups', reps: '3 sets × 12-15 reps', description: 'Standing chest exercise' },
+                { name: 'Knee Push-ups', reps: '3 sets × 8-12 reps', description: 'Modified push-ups' },
+                { name: 'Incline Push-ups', reps: '3 sets × 10-15 reps', description: 'Elevated surface push-ups' },
+                { name: 'Chest Squeeze', reps: '3 sets × 15-20 reps', description: 'Isometric chest exercise' },
+                { name: 'Arm Circles', reps: '3 sets × 15 each', description: 'Chest warm-up' }
+            ],
+            back: [
+                { name: 'Superman', reps: '3 sets × 12-15 reps', description: 'Lower back strengthening' },
+                { name: 'Reverse Fly', reps: '3 sets × 12-15 reps', description: 'Upper back exercise' },
+                { name: 'Cat-Cow Stretch', reps: '3 sets × 10-15 reps', description: 'Spine mobility' },
+                { name: 'Wall Angels', reps: '3 sets × 15-20 reps', description: 'Posture improvement' },
+                { name: 'Prone Y-Raises', reps: '3 sets × 12-15 reps', description: 'Upper back activation' }
+            ],
+            shoulders: [
+                { name: 'Arm Circles', reps: '3 sets × 15 each', description: 'Shoulder mobility' },
+                { name: 'Wall Handstand', reps: '3 sets × 20-30 sec', description: 'Shoulder stability' },
+                { name: 'Shoulder Shrugs', reps: '3 sets × 15-20 reps', description: 'Trap activation' },
+                { name: 'Band Pull-Aparts', reps: '3 sets × 15-20 reps', description: 'Rear delt exercise' },
+                { name: 'Pike Push-ups', reps: '3 sets × 8-12 reps', description: 'Shoulder press variation' }
+            ],
+            arms: [
+                { name: 'Wall Push-ups', reps: '3 sets × 12-15 reps', description: 'Tricep activation' },
+                { name: 'Arm Circles', reps: '3 sets × 15 each', description: 'Bicep warm-up' },
+                { name: 'Tricep Dips (Chair)', reps: '3 sets × 8-12 reps', description: 'Tricep strengthening' },
+                { name: 'Bicep Curls (Water)', reps: '3 sets × 12-15 reps', description: 'Light resistance curls' },
+                { name: 'Wrist Circles', reps: '3 sets × 10 each', description: 'Forearm mobility' }
+            ],
+            legs: [
+                { name: 'Bodyweight Squats', reps: '3 sets × 15-20 reps', description: 'Basic leg exercise' },
+                { name: 'Wall Sits', reps: '3 sets × 30-45 sec', description: 'Isometric leg hold' },
+                { name: 'Calf Raises', reps: '3 sets × 15-20 reps', description: 'Calf strengthening' },
+                { name: 'Glute Bridges', reps: '3 sets × 12-15 reps', description: 'Glute activation' },
+                { name: 'Marching in Place', reps: '3 sets × 30 sec', description: 'Leg coordination' }
+            ],
+            abs: [
+                { name: 'Crunches', reps: '3 sets × 15-20 reps', description: 'Basic ab exercise' },
+                { name: 'Plank', reps: '3 sets × 20-30 sec', description: 'Core stability' },
+                { name: 'Dead Bug', reps: '3 sets × 10 each side', description: 'Core coordination' },
+                { name: 'Modified Bicycle', reps: '3 sets × 15-20 reps', description: 'Oblique exercise' },
+                { name: 'Knee Raises', reps: '3 sets × 12-15 reps', description: 'Lower ab focus' }
+            ]
+        }
+    };
+    return exercises[level]?.[bodyPart] || [];
+}
+
+function createExerciseCard(exercise) {
+    const card = document.createElement('div');
+    card.className = 'exercise-card';
+    card.innerHTML = `
+        <div class="exercise-info">
+            <h4>${exercise.name}</h4>
+            <p>${exercise.reps}</p>
+            <div class="exercise-description">${exercise.description}</div>
+        </div>
+    `;
+    return card;
+}
+
+// Exercise filters functionality
+function initExerciseFilters() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const level = btn.getAttribute('data-level');
+            
+            // Update active filter button
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Filter exercises
+            filterExercises(level);
+        });
+    });
+}
+
+function filterExercises(level) {
+    const exerciseCards = document.querySelectorAll('.exercise-card');
+    
+    exerciseCards.forEach(card => {
+        if (level === 'all' || card.getAttribute('data-level') === level) {
+            card.style.display = 'block';
+            card.style.animation = 'fadeInUp 0.5s ease';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+// Initialize new features
+document.addEventListener('DOMContentLoaded', () => {
+    initExerciseModal();
+    initExerciseFilters();
+});

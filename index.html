@@ -65,8 +65,9 @@
         </p>
         <div class="hero-buttons">
           <a href="pages/membership.html" class="btn-primary pulse-btn">🚀 Join Now</a>
+          <a href="#" class="btn-secondary" id="exercisesBtn">💪 Exercises</a>
           <a href="pages/about.html" class="btn-secondary">📖 Learn More</a>
-          <a href="pages/trainers.html" class="btn-secondary">💪 Meet Trainers</a>
+          <a href="pages/trainers.html" class="btn-secondary">👨‍💼 Meet Trainers</a>
           <a href="pages/gallery.html" class="btn-secondary">📸 View Gallery</a>
         </div>
       </div>
@@ -286,6 +287,95 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Level Selection Modal -->
+    <div id="levelModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Choose Your Fitness Level</h2>
+        <p>Select your experience level to view appropriate exercises</p>
+        <div class="level-grid">
+          <div class="level-card" data-level="beginner">
+            <div class="level-icon">🌱</div>
+            <h3>Beginner</h3>
+            <p>New to fitness</p>
+            <span>5 Exercises</span>
+          </div>
+          <div class="level-card" data-level="intermediate">
+            <div class="level-icon">🔥</div>
+            <h3>Intermediate</h3>
+            <p>Some experience</p>
+            <span>5 Exercises</span>
+          </div>
+          <div class="level-card" data-level="advanced">
+            <div class="level-icon">⚡</div>
+            <h3>Advanced</h3>
+            <p>Experienced athlete</p>
+            <span>5 Exercises</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Body Part Selection Modal -->
+    <div id="bodyPartModal" class="modal">
+      <div class="modal-content">
+        <span class="close-body">&times;</span>
+        <h2>Choose Body Part</h2>
+        <p>Select a muscle group for your <span id="selectedLevel">beginner</span> workout</p>
+        <div class="body-parts-grid">
+          <div class="body-part-card" data-part="chest">
+            <div class="body-part-icon">💪</div>
+            <h3>Chest</h3>
+            <p>5 Exercises</p>
+          </div>
+          <div class="body-part-card" data-part="back">
+            <div class="body-part-icon">🔥</div>
+            <h3>Back</h3>
+            <p>5 Exercises</p>
+          </div>
+          <div class="body-part-card" data-part="shoulders">
+            <div class="body-part-icon">⚡</div>
+            <h3>Shoulders</h3>
+            <p>5 Exercises</p>
+          </div>
+          <div class="body-part-card" data-part="arms">
+            <div class="body-part-icon">💥</div>
+            <h3>Arms</h3>
+            <p>5 Exercises</p>
+          </div>
+          <div class="body-part-card" data-part="legs">
+            <div class="body-part-icon">🦵</div>
+            <h3>Legs</h3>
+            <p>5 Exercises</p>
+          </div>
+          <div class="body-part-card" data-part="abs">
+            <div class="body-part-icon">🎯</div>
+            <h3>Abs</h3>
+            <p>5 Exercises</p>
+          </div>
+        </div>
+        <div class="modal-navigation">
+          <button class="nav-btn" id="backToLevelsFromBody">← Back to Levels</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exercise Section -->
+    <section id="exercises" class="exercises" style="display: none;">
+      <div class="container">
+        <h2 id="exerciseTitle">Beginner Chest Exercises</h2>
+        <p class="section-subtitle">5 exercises perfect for your fitness level</p>
+        
+        <div class="exercise-row" id="exerciseGrid">
+          <!-- Exercises will be loaded here -->
+        </div>
+        
+        <div class="exercise-navigation">
+          <button class="nav-btn" id="backToBodyParts">← Back to Body Parts</button>
         </div>
       </div>
     </section>
