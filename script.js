@@ -223,9 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // Initialize advanced features
-    initParticleSystem();
     initDynamicCounters();
-    initMouseTracker();
     initSoundEffects();
     initFloatingElements();
 });
@@ -268,73 +266,7 @@ function createParticleExplosion(element) {
     }
 }
 
-// Dynamic particle system
-function initParticleSystem() {
-    const canvas = document.createElement('canvas');
-    canvas.id = 'particle-canvas';
-    canvas.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 1;
-    `;
-    document.body.appendChild(canvas);
-    
-    const ctx = canvas.getContext('2d');
-    const particles = [];
-    
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    
-    class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.5;
-            this.vy = (Math.random() - 0.5) * 0.5;
-            this.size = Math.random() * 2 + 1;
-            this.opacity = Math.random() * 0.5 + 0.2;
-        }
-        
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            
-            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-        }
-        
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(0, 255, 255, ${this.opacity})`;
-            ctx.fill();
-        }
-    }
-    
-    for (let i = 0; i < 50; i++) {
-        particles.push(new Particle());
-    }
-    
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(particle => {
-            particle.update();
-            particle.draw();
-        });
-        requestAnimationFrame(animate);
-    }
-    
-    animate();
-}
+
 
 // Dynamic counters
 function initDynamicCounters() {
@@ -366,36 +298,7 @@ function animateCounter(element, target) {
     }, 20);
 }
 
-// Mouse tracker effect
-function initMouseTracker() {
-    const cursor = document.createElement('div');
-    cursor.className = 'custom-cursor';
-    document.body.appendChild(cursor);
-    
-    let mouseX = 0, mouseY = 0;
-    let cursorX = 0, cursorY = 0;
-    
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-    
-    function updateCursor() {
-        cursorX += (mouseX - cursorX) * 0.1;
-        cursorY += (mouseY - cursorY) * 0.1;
-        cursor.style.left = cursorX + 'px';
-        cursor.style.top = cursorY + 'px';
-        requestAnimationFrame(updateCursor);
-    }
-    
-    updateCursor();
-    
-    // Cursor interactions
-    document.querySelectorAll('a, button, .service-card, .trainer-card').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
-}
+
 
 // Sound effects
 function initSoundEffects() {
@@ -739,37 +642,6 @@ style.textContent = `
         transition: all 0.3s ease;
     }
     
-    .custom-cursor {
-        position: fixed;
-        width: 20px;
-        height: 20px;
-        background: rgba(0, 255, 255, 0.5);
-        border: 2px solid #00ffff;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        transition: all 0.1s ease;
-        transform: translate(-50%, -50%);
-    }
-    
-    .custom-cursor.hover {
-        width: 40px;
-        height: 40px;
-        background: rgba(0, 255, 255, 0.2);
-        border-color: #00ffff;
-    }
-    
-    body {
-        cursor: none;
-    }
-    
-    @media (max-width: 768px) {
-        .custom-cursor {
-            display: none;
-        }
-        body {
-            cursor: auto;
-        }
-    }
+
 `;
 document.head.appendChild(style);
