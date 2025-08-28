@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - CityStarGym</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="payment-container">
+        <div class="payment-card">
+            <div class="payment-header">
+                <h2>💳 Secure Payment</h2>
+                <p>Complete your CityStarGym membership</p>
+            </div>
+            
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <div class="plan-details">
+                    <span id="planName">Premium Plan</span>
+                    <span id="planAmount">₹3,999</span>
+                </div>
+                <div class="total">
+                    <strong>Total: <span id="totalAmount">₹3,999</span></strong>
+                </div>
+            </div>
+
+            <form id="paymentForm" class="payment-form">
+                <div class="form-group">
+                    <label>💳 Card Number</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>📅 Expiry Date</label>
+                        <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>🔒 CVV</label>
+                        <input type="text" id="cvv" placeholder="123" maxlength="3" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>👤 Cardholder Name</label>
+                    <input type="text" id="cardholderName" placeholder="John Doe" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>📧 Email</label>
+                    <input type="email" id="email" placeholder="john@example.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>📱 Phone</label>
+                    <input type="tel" id="phone" placeholder="+91 98765 43210" required>
+                </div>
+                
+                <button type="submit" class="btn-pay">
+                    <span>🚀 Complete Payment</span>
+                </button>
+            </form>
+            
+            <div class="security-info">
+                <p>🔐 Your payment is secured with 256-bit SSL encryption</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get payment details from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const plan = urlParams.get('plan') || 'premium';
+        const amount = urlParams.get('amount') || '3999';
+        
+        // Update display
+        document.getElementById('planName').textContent = plan.charAt(0).toUpperCase() + plan.slice(1) + ' Plan';
+        document.getElementById('planAmount').textContent = '₹' + amount;
+        document.getElementById('totalAmount').textContent = '₹' + amount;
+        
+        // Format card number input
+        document.getElementById('cardNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formattedValue;
+        });
+        
+        // Format expiry date
+        document.getElementById('expiryDate').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0,2) + '/' + value.substring(2,4);
+            }
+            e.target.value = value;
+        });
+        
+        // CVV numeric only
+        document.getElementById('cvv').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+        
+        // Handle payment form submission
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show processing
+            const submitBtn = document.querySelector('.btn-pay');
+            submitBtn.innerHTML = '<span>⏳ Processing...</span>';
+            submitBtn.disabled = true;
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                // Show success message
+                document.querySelector('.payment-card').innerHTML = `
+                    <div class="payment-success">
+                        <div class="success-icon">✅</div>
+                        <h2>Payment Successful!</h2>
+                        <p>Welcome to CityStarGym ${plan.charAt(0).toUpperCase() + plan.slice(1)} Plan</p>
+                        <div class="success-details">
+                            <p><strong>Amount Paid:</strong> ₹${amount}</p>
+                            <p><strong>Transaction ID:</strong> CSG${Date.now()}</p>
+                            <p><strong>Plan:</strong> ${plan.charAt(0).toUpperCase() + plan.slice(1)}</p>
+                        </div>
+                        <button onclick="window.location.href='../index.html'" class="btn-home">
+                            🏠 Back to Home
+                        </button>
+                    </div>
+                `;
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

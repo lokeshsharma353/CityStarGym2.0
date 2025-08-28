@@ -13,7 +13,7 @@
   <body>
     <!-- Interactive Background -->
     <div class="interactive-bg"></div>
-    
+
     <!-- Header -->
     <header class="header">
       <nav class="navbar">
@@ -64,11 +64,16 @@
           equipment, expert trainers, and unlimited possibilities.
         </p>
         <div class="hero-buttons">
-          <a href="pages/membership.html" class="btn-primary pulse-btn">🚀 Join Now</a>
+          <a href="pages/membership.html" class="btn-primary pulse-btn"
+            >🚀 Join Now</a
+          >
           <a href="#" class="btn-secondary" id="exercisesBtn">💪 Exercises</a>
           <a href="pages/about.html" class="btn-secondary">📖 Learn More</a>
-          <a href="pages/trainers.html" class="btn-secondary">👨‍💼 Meet Trainers</a>
+          <a href="pages/trainers.html" class="btn-secondary"
+            >👨‍💼 Meet Trainers</a
+          >
           <a href="pages/gallery.html" class="btn-secondary">📸 View Gallery</a>
+          <a href="pages/bmi-calculator.html" class="btn-secondary">⚖️ BMI Calculator</a>
         </div>
       </div>
       <div class="hero-features">
@@ -83,48 +88,6 @@
         <div class="feature">
           <h3>Expert</h3>
           <p>Certified Trainers</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-      <div class="container">
-        <h2>About CityStarGym</h2>
-        <div class="about-content">
-          <div class="about-text">
-            <p>
-              Founded by <strong>Sunil Kadian</strong>, CityStarGym is located
-              in the heart of Rohtak, Haryana. Our premier destination for
-              fitness excellence operates 24/7, ensuring you can pursue your
-              fitness goals on your schedule with state-of-the-art equipment and
-              expert guidance.
-            </p>
-            <div class="owner-info">
-              <h4>🏋️ Gym Owner: Sunil Kadian</h4>
-              <p>
-                Passionate fitness enthusiast dedicated to transforming lives
-                through fitness
-              </p>
-            </div>
-            <div class="stats">
-              <div class="stat">
-                <h3>500+</h3>
-                <p>Happy Members</p>
-              </div>
-              <div class="stat">
-                <h3>24/7</h3>
-                <p>Operating Hours</p>
-              </div>
-              <div class="stat">
-                <h3>5+</h3>
-                <p>Expert Trainers</p>
-              </div>
-            </div>
-          </div>
-          <div class="about-image">
-            <div class="image-placeholder">Modern Gym Interior</div>
-          </div>
         </div>
       </div>
     </section>
@@ -197,9 +160,7 @@
             <div class="manager-info">
               <h3>Dipanshu</h3>
               <p class="manager-title">General Manager</p>
-              <p>
-                Oversees daily operations and ensures premium service delivery.
-              </p>
+              <p>Oversees daily operations and ensures service delivery.</p>
               <div class="manager-qualifications"></div>
               <div class="social-link"></div>
             </div>
@@ -229,62 +190,41 @@
         <div class="trainers-grid">
           <div class="trainer-card">
             <div class="trainer-photo">
-              <img
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                alt="Rahul Sharma"
-              />
+              <img src="../images/Trainer.jpg" alt="ParBhat" />
             </div>
             <div class="trainer-info">
-              <h3>Rahul Sharma</h3>
+              <h3>Parbhat</h3>
               <p class="trainer-specialty">Strength & Conditioning Coach</p>
               <p>
-                Certified personal trainer with 8+ years experience in
-                bodybuilding and strength training.
+                Certified personal trainer with 8+ years experience in strength
+                training.
               </p>
-              <div class="trainer-certifications">
-                <span>ACSM Certified</span>
-                <span>Nutrition Specialist</span>
-              </div>
             </div>
           </div>
           <div class="trainer-card">
             <div class="trainer-photo">
-              <img
-                src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                alt="Priya Singh"
-              />
+              <img src="../images/Trainer.jpg" alt="Pawan" />
             </div>
             <div class="trainer-info">
-              <h3>Priya Singh</h3>
-              <p class="trainer-specialty">Yoga & Wellness Coach</p>
+              <h3>Pawan</h3>
+              <p class="trainer-specialty">Strength Coach</p>
               <p>
-                Expert in yoga, pilates, and holistic wellness with 6+ years of
+                Expert in strength training and conditioning with 4+ years of
                 transforming lives.
               </p>
-              <div class="trainer-certifications">
-                <span>RYT 500 Certified</span>
-                <span>Pilates Instructor</span>
-              </div>
             </div>
           </div>
           <div class="trainer-card">
             <div class="trainer-photo">
-              <img
-                src="https://images.unsplash.com/photo-1583500178690-f7b6d3ac8b28?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-                alt="Vikash Kumar"
-              />
+              <img src="../images/Trainer.jpg" alt="Suresh" />
             </div>
             <div class="trainer-info">
-              <h3>Vikash Kumar</h3>
-              <p class="trainer-specialty">CrossFit & HIIT Specialist</p>
+              <h3>Suresh</h3>
+              <p class="trainer-specialty">Strength Coach</p>
               <p>
-                High-intensity training expert specializing in CrossFit and
-                functional fitness.
+                15+ years Experience High-intensity training expert specializing
+                in BodyBuilding, CrossFit, strength and functional fitness.
               </p>
-              <div class="trainer-certifications">
-                <span>CrossFit Level 2</span>
-                <span>HIIT Certified</span>
-              </div>
             </div>
           </div>
         </div>
@@ -325,7 +265,10 @@
       <div class="modal-content">
         <span class="close-body">&times;</span>
         <h2>Choose Body Part</h2>
-        <p>Select a muscle group for your <span id="selectedLevel">beginner</span> workout</p>
+        <p>
+          Select a muscle group for your
+          <span id="selectedLevel">beginner</span> workout
+        </p>
         <div class="body-parts-grid">
           <div class="body-part-card" data-part="chest">
             <div class="body-part-icon">💪</div>
@@ -359,23 +302,29 @@
           </div>
         </div>
         <div class="modal-navigation">
-          <button class="nav-btn" id="backToLevelsFromBody">← Back to Levels</button>
+          <button class="nav-btn" id="backToLevelsFromBody">
+            ← Back to Levels
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Exercise Section -->
-    <section id="exercises" class="exercises" style="display: none;">
+    <section id="exercises" class="exercises" style="display: none">
       <div class="container">
         <h2 id="exerciseTitle">Beginner Chest Exercises</h2>
-        <p class="section-subtitle">5 exercises perfect for your fitness level</p>
-        
+        <p class="section-subtitle">
+          5 exercises perfect for your fitness level
+        </p>
+
         <div class="exercise-row" id="exerciseGrid">
           <!-- Exercises will be loaded here -->
         </div>
-        
+
         <div class="exercise-navigation">
-          <button class="nav-btn" id="backToBodyParts">← Back to Body Parts</button>
+          <button class="nav-btn" id="backToBodyParts">
+            ← Back to Body Parts
+          </button>
         </div>
       </div>
     </section>
@@ -387,39 +336,50 @@
         <div class="gallery-grid">
           <div class="gallery-item">
             <img
-              src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+              src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90"
               alt="Modern Gym Equipment"
             />
             <div class="gallery-overlay">
+              <div class="overlay-icon">🏆</div>
               <h3>State-of-the-Art Equipment</h3>
+              <p>Premium machines & free weights</p>
             </div>
           </div>
           <div class="gallery-item">
             <img
-              src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+              src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90"
               alt="Cardio Zone"
             />
             <div class="gallery-overlay">
-              <h3>Premium Cardio Zone</h3>
+              <div class="overlay-icon">❤️</div>
+              <h3>Elite Cardio Zone</h3>
+              <p>Latest cardio technology</p>
             </div>
           </div>
           <div class="gallery-item">
             <img
-              src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+              src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90"
               alt="Weight Training Area"
             />
             <div class="gallery-overlay">
-              <h3>Weight Training Area</h3>
+              <div class="overlay-icon">💪</div>
+              <h3>Strength Training Zone</h3>
+              <p>Professional powerlifting area</p>
             </div>
           </div>
           <div class="gallery-item">
             <img
-              src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+              src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90"
               alt="Group Class Studio"
             />
             <div class="gallery-overlay">
-              <h3>Group Class Studio</h3>
+              <div class="overlay-icon">🤸</div>
+              <h3>Luxury Group Studio</h3>
+              <p>Yoga, Pilates & group classes</p>
             </div>
+          </div>
+     
+
           </div>
         </div>
       </div>
@@ -479,7 +439,9 @@
               <li>Basic Equipment</li>
               <li>Group Classes</li>
             </ul>
-            <a href="pages/contact.html" class="btn-plan">Choose Plan</a>
+            <button onclick="initiatePayment('basic', 1500)" class="btn-plan">
+              💳 Pay Now
+            </button>
           </div>
           <div class="plan featured">
             <h3>Premium</h3>
@@ -490,7 +452,9 @@
               <li>Nutrition Consultation</li>
               <li>Recovery Zone Access</li>
             </ul>
-            <a href="pages/contact.html" class="btn-plan">Choose Plan</a>
+            <button onclick="initiatePayment('basic', 1500)" class="btn-plan">
+              💳 Pay Now
+            </button>
           </div>
           <div class="plan">
             <h3>Elite</h3>
@@ -502,7 +466,9 @@
               <li>All Basic Features</li>
               <li>Group Classes</li>
             </ul>
-            <a href="pages/contact.html" class="btn-plan">Choose Plan</a>
+            <button onclick="initiatePayment('basic', 1500)" class="btn-plan">
+              💳 Pay Now
+            </button>
           </div>
         </div>
       </div>
@@ -577,16 +543,16 @@
 
     <script src="script.js"></script>
     <script src="interactive.js"></script>
-    
+
     <script>
       // Interactive background mouse tracking
-      document.addEventListener('mousemove', (e) => {
-        const bg = document.querySelector('.interactive-bg');
+      document.addEventListener("mousemove", (e) => {
+        const bg = document.querySelector(".interactive-bg");
         if (bg) {
           const x = (e.clientX / window.innerWidth) * 100;
           const y = (e.clientY / window.innerHeight) * 100;
-          bg.style.setProperty('--mouse-x', x + '%');
-          bg.style.setProperty('--mouse-y', y + '%');
+          bg.style.setProperty("--mouse-x", x + "%");
+          bg.style.setProperty("--mouse-y", y + "%");
         }
       });
     </script>

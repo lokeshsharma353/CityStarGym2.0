@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator - CityStarGym</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bmi-calculator-container">
+        <div class="bmi-card">
+            <div class="bmi-header">
+                <h2>⚖️ BMI Calculator</h2>
+                <p>Calculate your Body Mass Index and get personalized health insights</p>
+            </div>
+
+            <div class="calculator-section">
+                <div class="unit-toggle">
+                    <button id="metricBtn" class="unit-btn active">Metric</button>
+                    <button id="imperialBtn" class="unit-btn">Imperial</button>
+                </div>
+
+                <form id="bmiForm" class="bmi-form">
+                    <!-- Metric Units -->
+                    <div id="metricInputs" class="input-section">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>📏 Height (cm)</label>
+                                <input type="number" id="heightCm" placeholder="170" min="100" max="250">
+                            </div>
+                            <div class="form-group">
+                                <label>⚖️ Weight (kgs)</label>
+                                <input type="number" id="weightKg" placeholder="70" min="30" max="300" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Imperial Units -->
+                    <div id="imperialInputs" class="input-section" style="display: none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>📏 Height</label>
+                                <div class="height-imperial">
+                                    <input type="number" id="heightFt" placeholder="5" min="3" max="8"> ft
+                                    <input type="number" id="heightIn" placeholder="7" min="0" max="11"> in
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>⚖️ Weight (lbs)</label>
+                                <input type="number" id="weightLbs" placeholder="154" min="66" max="660" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Optional Fields -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>🎂 Age (optional)</label>
+                            <input type="number" id="age" placeholder="25" min="16" max="100">
+                        </div>
+                        <div class="form-group">
+                            <label>👤 Gender (optional)</label>
+                            <select id="gender">
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-calculate">🧮 Calculate BMI</button>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="results-section" style="display: none;">
+                <div class="bmi-result">
+                    <div class="bmi-value">
+                        <span class="bmi-number" id="bmiValue">0.0</span>
+                        <span class="bmi-unit">BMI</span>
+                    </div>
+                    <div class="bmi-category" id="bmiCategory">
+                        <span class="category-text">Normal Weight</span>
+                        <div class="category-indicator" id="categoryIndicator"></div>
+                    </div>
+                </div>
+
+                <div class="bmi-chart">
+                    <div class="chart-bar">
+                        <div class="range underweight" data-range="< 18.5">Underweight</div>
+                        <div class="range normal" data-range="18.5 - 24.9">Normal</div>
+                        <div class="range overweight" data-range="25 - 29.9">Overweight</div>
+                        <div class="range obese" data-range="≥ 30">Obese</div>
+                    </div>
+                    <div class="bmi-pointer" id="bmiPointer"></div>
+                </div>
+
+                <div class="health-insights">
+                    <div class="insight-card" id="healthTip">
+                        <h4>💡 Health Insight</h4>
+                        <p id="tipText">Your BMI indicates a healthy weight range.</p>
+                    </div>
+                    
+                    <div class="recommendations">
+                        <h4>🎯 Personalized Recommendations</h4>
+                        <div id="recommendationsList">
+                            <!-- Recommendations will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="saveResult" class="btn-primary">💾 Save Result</button>
+                    <button id="viewHistory" class="btn-secondary">📊 View History</button>
+                    <button id="getWorkoutPlan" class="btn-secondary">🏋️ Get Workout Plan</button>
+                </div>
+            </div>
+
+            <!-- History Section -->
+            <div id="historySection" class="history-section" style="display: none;">
+                <div class="history-header">
+                    <h3>📊 BMI History</h3>
+                    <button id="backToCalculator" class="btn-secondary">← Back</button>
+                </div>
+                <div id="historyChart" class="history-chart">
+                    <!-- History chart will be populated here -->
+                </div>
+                <div id="historyList" class="history-list">
+                    <!-- History entries will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class BMICalculator {
+            constructor() {
+                this.currentUnit = 'metric';
+                this.bmiHistory = JSON.parse(localStorage.getItem('bmiHistory') || '[]');
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+                this.loadSavedData();
+            }
+
+            bindEvents() {
+                // Unit toggle
+                document.getElementById('metricBtn').addEventListener('click', () => this.switchUnit('metric'));
+                document.getElementById('imperialBtn').addEventListener('click', () => this.switchUnit('imperial'));
+
+                // Form submission
+                document.getElementById('bmiForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.calculateBMI();
+                });
+
+                // Action buttons
+                document.getElementById('saveResult').addEventListener('click', () => this.saveResult());
+                document.getElementById('viewHistory').addEventListener('click', () => this.showHistory());
+                document.getElementById('getWorkoutPlan').addEventListener('click', () => this.redirectToWorkoutPlan());
+                document.getElementById('backToCalculator').addEventListener('click', () => this.showCalculator());
+
+                // Real-time calculation
+                const inputs = ['heightCm', 'weightKg', 'heightFt', 'heightIn', 'weightLbs'];
+                inputs.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.addEventListener('input', () => this.calculateBMI());
+                    }
+                });
+            }
+
+            switchUnit(unit) {
+                this.currentUnit = unit;
+                
+                // Update button states
+                document.querySelectorAll('.unit-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById(unit + 'Btn').classList.add('active');
+
+                // Show/hide input sections
+                document.getElementById('metricInputs').style.display = unit === 'metric' ? 'block' : 'none';
+                document.getElementById('imperialInputs').style.display = unit === 'imperial' ? 'block' : 'none';
+
+                // Clear results
+                document.getElementById('resultsSection').style.display = 'none';
+            }
+
+            calculateBMI() {
+                let height, weight;
+
+                if (this.currentUnit === 'metric') {
+                    height = parseFloat(document.getElementById('heightCm').value);
+                    weight = parseFloat(document.getElementById('weightKg').value);
+                    
+                    if (!height || !weight) return;
+                    
+                    // Convert cm to meters
+                    height = height / 100;
+                } else {
+                    const feet = parseFloat(document.getElementById('heightFt').value) || 0;
+                    const inches = parseFloat(document.getElementById('heightIn').value) || 0;
+                    weight = parseFloat(document.getElementById('weightLbs').value);
+                    
+                    if (!feet || !weight) return;
+                    
+                    // Convert to metric
+                    height = ((feet * 12) + inches) * 0.0254; // Convert to meters
+                    weight = weight * 0.453592; // Convert to kg
+                }
+
+                const bmi = weight / (height * height);
+                this.displayResults(bmi);
+            }
+
+            displayResults(bmi) {
+                const bmiValue = Math.round(bmi * 10) / 10;
+                const category = this.getBMICategory(bmi);
+                
+                document.getElementById('bmiValue').textContent = bmiValue;
+                document.getElementById('resultsSection').style.display = 'block';
+                
+                this.updateCategoryDisplay(category);
+                this.updateBMIChart(bmi);
+                this.generateHealthInsights(bmi, category);
+                this.generateRecommendations(bmi, category);
+            }
+
+            getBMICategory(bmi) {
+                if (bmi < 18.5) return { name: 'Underweight', class: 'underweight', color: '#3498db' };
+                if (bmi < 25) return { name: 'Normal Weight', class: 'normal', color: '#27ae60' };
+                if (bmi < 30) return { name: 'Overweight', class: 'overweight', color: '#f39c12' };
+                return { name: 'Obese', class: 'obese', color: '#e74c3c' };
+            }
+
+            updateCategoryDisplay(category) {
+                const categoryElement = document.getElementById('bmiCategory');
+                const indicatorElement = document.getElementById('categoryIndicator');
+                
+                categoryElement.querySelector('.category-text').textContent = category.name;
+                categoryElement.className = `bmi-category ${category.class}`;
+                indicatorElement.style.backgroundColor = category.color;
+            }
+
+            updateBMIChart(bmi) {
+                const pointer = document.getElementById('bmiPointer');
+                let position;
+                
+                if (bmi < 18.5) position = (bmi / 18.5) * 25;
+                else if (bmi < 25) position = 25 + ((bmi - 18.5) / 6.5) * 25;
+                else if (bmi < 30) position = 50 + ((bmi - 25) / 5) * 25;
+                else position = Math.min(75 + ((bmi - 30) / 10) * 25, 100);
+                
+                pointer.style.left = position + '%';
+            }
+
+            generateHealthInsights(bmi, category) {
+                const age = document.getElementById('age').value;
+                const gender = document.getElementById('gender').value;
+                
+                const insights = {
+                    underweight: "Your BMI indicates you may be underweight. Consider consulting with a healthcare provider about healthy weight gain strategies.",
+                    normal: "Excellent! Your BMI is in the healthy range. Maintain your current lifestyle with regular exercise and balanced nutrition.",
+                    overweight: "Your BMI indicates you may be overweight. Consider incorporating more physical activity and reviewing your diet with a nutritionist.",
+                    obese: "Your BMI indicates obesity. We recommend consulting with healthcare professionals for a comprehensive weight management plan."
+                };
+                
+                let tipText = insights[category.class];
+                
+                if (age && gender) {
+                    tipText += ` Based on your age (${age}) and gender, personalized recommendations are available below.`;
+                }
+                
+                document.getElementById('tipText').textContent = tipText;
+            }
+
+            generateRecommendations(bmi, category) {
+                const recommendationsList = document.getElementById('recommendationsList');
+                const age = document.getElementById('age').value;
+                
+                const recommendations = {
+                    underweight: [
+                        "🍽️ Focus on nutrient-dense, calorie-rich foods",
+                        "💪 Strength training to build muscle mass",
+                        "🥛 Consider protein supplements",
+                        "👨‍⚕️ Consult with a nutritionist"
+                    ],
+                    normal: [
+                        "🏃‍♂️ Maintain regular cardio exercise (150 min/week)",
+                        "🏋️‍♀️ Include strength training 2-3 times per week",
+                        "🥗 Continue balanced, nutritious diet",
+                        "💧 Stay hydrated (8-10 glasses daily)"
+                    ],
+                    overweight: [
+                        "🔥 Create a moderate calorie deficit (300-500 calories)",
+                        "🚶‍♂️ Increase daily physical activity",
+                        "🥬 Focus on whole foods, reduce processed foods",
+                        "📊 Track your progress weekly"
+                    ],
+                    obese: [
+                        "👨‍⚕️ Consult healthcare provider for comprehensive plan",
+                        "🎯 Set realistic, gradual weight loss goals",
+                        "🏊‍♂️ Start with low-impact exercises",
+                        "📱 Consider joining our supervised programs"
+                    ]
+                };
+                
+                const recs = recommendations[category.class] || recommendations.normal;
+                recommendationsList.innerHTML = recs.map(rec => `<div class="recommendation-item">${rec}</div>`).join('');
+            }
+
+            saveResult() {
+                const bmi = parseFloat(document.getElementById('bmiValue').textContent);
+                const category = document.querySelector('.category-text').textContent;
+                const age = document.getElementById('age').value;
+                const gender = document.getElementById('gender').value;
+                
+                const result = {
+                    date: new Date().toISOString(),
+                    bmi: bmi,
+                    category: category,
+                    age: age || null,
+                    gender: gender || null,
+                    unit: this.currentUnit
+                };
+                
+                this.bmiHistory.unshift(result);
+                this.bmiHistory = this.bmiHistory.slice(0, 10); // Keep last 10 results
+                
+                localStorage.setItem('bmiHistory', JSON.stringify(this.bmiHistory));
+                alert('✅ BMI result saved successfully!');
+            }
+
+            showHistory() {
+                if (this.bmiHistory.length === 0) {
+                    alert('No BMI history found. Calculate your BMI first!');
+                    return;
+                }
+                
+                document.getElementById('resultsSection').style.display = 'none';
+                document.getElementById('historySection').style.display = 'block';
+                
+                this.renderHistory();
+            }
+
+            renderHistory() {
+                const historyList = document.getElementById('historyList');
+                
+                if (this.bmiHistory.length === 0) {
+                    historyList.innerHTML = '<p>No BMI records found.</p>';
+                    return;
+                }
+                
+                historyList.innerHTML = this.bmiHistory.map((record, index) => {
+                    const date = new Date(record.date).toLocaleDateString();
+                    const categoryClass = this.getBMICategory(record.bmi).class;
+                    
+                    return `
+                        <div class="history-item ${categoryClass}">
+                            <div class="history-date">${date}</div>
+                            <div class="history-bmi">${record.bmi}</div>
+                            <div class="history-category">${record.category}</div>
+                            ${index === 0 ? '<span class="latest-badge">Latest</span>' : ''}
+                        </div>
+                    `;
+                }).join('');
+                
+                this.renderHistoryChart();
+            }
+
+            renderHistoryChart() {
+                const chartContainer = document.getElementById('historyChart');
+                
+                if (this.bmiHistory.length < 2) {
+                    chartContainer.innerHTML = '<p>Need at least 2 records to show progress chart.</p>';
+                    return;
+                }
+                
+                const maxBMI = Math.max(...this.bmiHistory.map(r => r.bmi));
+                const minBMI = Math.min(...this.bmiHistory.map(r => r.bmi));
+                const range = maxBMI - minBMI || 1;
+                
+                chartContainer.innerHTML = `
+                    <div class="chart-title">BMI Progress</div>
+                    <div class="chart-line">
+                        ${this.bmiHistory.slice().reverse().map((record, index) => {
+                            const height = ((record.bmi - minBMI) / range) * 100;
+                            return `
+                                <div class="chart-point" style="height: ${height}%; left: ${(index / (this.bmiHistory.length - 1)) * 100}%">
+                                    <div class="point-tooltip">${record.bmi}<br>${new Date(record.date).toLocaleDateString()}</div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            }
+
+            showCalculator() {
+                document.getElementById('historySection').style.display = 'none';
+                document.getElementById('resultsSection').style.display = 'block';
+            }
+
+            redirectToWorkoutPlan() {
+                const bmi = parseFloat(document.getElementById('bmiValue').textContent);
+                const category = this.getBMICategory(bmi).class;
+                
+                // Store BMI context for workout planner
+                localStorage.setItem('bmiContext', JSON.stringify({ bmi, category }));
+                
+                window.location.href = 'workout-planner.html';
+            }
+
+            loadSavedData() {
+                // Load any previously entered data
+                const savedData = localStorage.getItem('bmiFormData');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    Object.keys(data).forEach(key => {
+                        const element = document.getElementById(key);
+                        if (element) element.value = data[key];
+                    });
+                }
+            }
+        }
+
+        // Initialize BMI Calculator
+        const bmiCalculator = new BMICalculator();
+    </script>
+</body>
+</html>
