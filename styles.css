@@ -3964,3 +3964,67 @@ body {
         background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%) !important;
     }
 }
+/* Remove All Animations on Mobile */
+@media (max-width: 768px) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+    
+    /* Remove hover effects */
+    .gallery-item:hover,
+    .service-card:hover,
+    .plan:hover,
+    .trainer-card:hover,
+    .manager-card:hover,
+    .btn-primary:hover,
+    .btn-secondary:hover,
+    .feature:hover {
+        transform: none !important;
+        box-shadow: none !important;
+        border-color: inherit !important;
+    }
+    
+    /* Remove pseudo-element animations */
+    .service-card::before,
+    .plan::before,
+    .btn-secondary::before,
+    .login-card::before {
+        display: none !important;
+    }
+    
+    /* Static states only */
+    .gallery-overlay {
+        transform: translateY(0) !important;
+        position: relative !important;
+        background: rgba(0, 0, 0, 0.8) !important;
+    }
+    
+    /* Remove floating animations */
+    .logo-icon,
+    .admin-icon,
+    .overlay-icon {
+        animation: none !important;
+    }
+    
+    /* Remove pulse effects */
+    .pulse-btn,
+    .feature {
+        animation: none !important;
+    }
+    
+    /* Remove gradient animations */
+    .btn-primary {
+        background: #00ffff !important;
+        background-size: 100% 100% !important;
+    }
+}
+/* Remove Hero Background Image on Mobile */
+@media (max-width: 768px) {
+    .hero {
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%) !important;
+        background-image: none !important;
+        background-attachment: scroll !important;
+    }
+}
