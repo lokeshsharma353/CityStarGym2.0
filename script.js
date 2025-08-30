@@ -146,49 +146,10 @@ function showNotification(message, type = "info") {
 
 // Add click effects to all buttons
 document.addEventListener("DOMContentLoaded", () => {
-  // Add ripple effect to buttons
-  document
-    .querySelectorAll(".btn-primary, .btn-secondary, .btn-plan")
-    .forEach((btn) => {
-      btn.addEventListener("click", function (e) {
-        const ripple = document.createElement("span");
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-
-        ripple.style.cssText = `
-                position: absolute;
-                width: ${size}px;
-                height: ${size}px;
-                left: ${x}px;
-                top: ${y}px;
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 50%;
-                transform: scale(0);
-                animation: ripple 0.6s linear;
-                pointer-events: none;
-            `;
-
-        this.style.position = "relative";
-        this.style.overflow = "hidden";
-        this.appendChild(ripple);
-
-        setTimeout(() => {
-          if (this.contains(ripple)) {
-            this.removeChild(ripple);
-          }
-        }, 600);
-      });
-    });
 
   // Service card interactions
   document.querySelectorAll(".service-card").forEach((card) => {
     card.addEventListener("click", () => {
-      card.style.transform = "scale(1.05)";
-      setTimeout(() => {
-        card.style.transform = "";
-      }, 200);
       showNotification(
         "🔥 Service selected! Contact us for more details.",
         "info"
@@ -196,15 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Feature card interactions
-  document.querySelectorAll(".feature").forEach((feature) => {
-    feature.addEventListener("click", () => {
-      feature.style.transform = "scale(1.1) rotate(5deg)";
-      setTimeout(() => {
-        feature.style.transform = "";
-      }, 300);
-    });
-  });
+
 
   // Instagram link interactions
   document
@@ -216,18 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-  // Plan card interactions
-  document.querySelectorAll(".plan").forEach((plan) => {
-    plan.addEventListener("mouseenter", () => {
-      plan.style.transform = "translateY(-10px) scale(1.02)";
-    });
 
-    plan.addEventListener("mouseleave", () => {
-      plan.style.transform = plan.classList.contains("featured")
-        ? "scale(1.05)"
-        : "";
-    });
-  });
 
   // Trainer and Manager card interactions
   document.querySelectorAll(".trainer-card, .manager-card").forEach((card) => {
