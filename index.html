@@ -21,13 +21,13 @@
           <h1>CityStarGym<span></span></h1>
         </div>
         <ul class="nav-menu">
-          <li><a href="#home" class="active">Home</a></li>
-          <li><a href="pages/about.html">About</a></li>
-          <li><a href="pages/services.html">Services</a></li>
-          <li><a href="pages/trainers.html">Trainers</a></li>
-          <li><a href="pages/membership.html">Membership</a></li>
-          <li><a href="pages/gallery.html">Gallery</a></li>
-          <li><a href="pages/contact.html">Contact</a></li>
+          <li><a href="#home" onclick="closeMenu()">Home</a></li>
+          <li><a href="pages/about.html" onclick="closeMenu()">About</a></li>
+          <li><a href="pages/services.html" onclick="closeMenu()">Services</a></li>
+          <li><a href="pages/trainers.html" onclick="closeMenu()">Trainers</a></li>
+          <li><a href="pages/membership.html" onclick="closeMenu()">Membership</a></li>
+          <li><a href="pages/gallery.html" onclick="closeMenu()">Gallery</a></li>
+          <li><a href="pages/contact.html" onclick="closeMenu()">Contact</a></li>
           <li>
             <a
               href="https://www.instagram.com/citystargym_2022/?utm_source=ig_web_button_share_sheet"
@@ -47,7 +47,7 @@
             </a>
           </li>
         </ul>
-        <div class="hamburger">
+        <div class="hamburger" onclick="toggleMenu()">
           <span></span>
           <span></span>
           <span></span>
@@ -545,6 +545,22 @@
     <script src="interactive.js"></script>
 
     <script>
+      // Simple Mobile Menu Toggle
+      function toggleMenu() {
+        const navMenu = document.querySelector('.nav-menu');
+        const currentLeft = navMenu.style.left;
+        
+        if (currentLeft === '0px') {
+          navMenu.style.left = '-100%';
+        } else {
+          navMenu.style.left = '0px';
+        }
+      }
+      
+      function closeMenu() {
+        document.querySelector('.nav-menu').style.left = '-100%';
+      }
+      
       // Interactive background mouse tracking
       document.addEventListener("mousemove", (e) => {
         const bg = document.querySelector(".interactive-bg");

@@ -1,0 +1,84 @@
+/* Admin Portal Black & White Styles */
+.admin-container {
+    min-height: 100vh;
+    background: #000000 !important;
+    padding: 2rem;
+    position: relative;
+}
+
+.admin-container::before {
+    background: transparent !important;
+}
+
+.login-card {
+    background: rgba(0, 0, 0, 0.95) !important;
+    border: 3px solid #ffffff !important;
+    border-image: none !important;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6) !important;
+}
+
+.admin-logo h2 {
+    color: #ffffff !important;
+    text-shadow: none !important;
+}
+
+.admin-login-btn {
+    background: #000000 !important;
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
+}
+
+.admin-login-btn:hover {
+    background: #333333 !important;
+}
+
+.admin-dashboard {
+    background: rgba(0, 0, 0, 0.95) !important;
+    border: 3px solid #ffffff !important;
+    border-image: none !important;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6) !important;
+}
+
+.admin-header {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.admin-header h1 {
+    color: #ffffff !important;
+    text-shadow: none !important;
+}
+
+.section-header h3 {
+    color: #ffffff !important;
+    text-shadow: none !important;
+}
+
+.plan-card h4 {
+    color: #ffffff !important;
+}
+
+.trainer-edit-card h4 {
+    color: #ffffff !important;
+}
+
+.input-group label {
+    color: #ffffff !important;
+}
+
+.btn-update {
+    background: #000000 !important;
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
+}
+
+.btn-update:hover {
+    background: #333333 !important;
+}
+
+.plan-card {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.trainer-edit-card {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
